@@ -53,6 +53,9 @@ inputs:
   ignore-nothing-to-cache:
     description: "Ignore when nothing is found to cache."
     default: "false"
+  install-python:
+    description: "Install Python"
+    default: "false"
   ignore-empty-workdir:
     description: "Ignore when the working directory is empty."
     default: "false"
