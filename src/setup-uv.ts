@@ -18,6 +18,7 @@ import {
   cacheLocalPath,
   checkSum,
   ignoreEmptyWorkdir,
+  installPython,
   enableCache,
   githubToken,
   pythonVersion,
@@ -58,12 +59,15 @@ async function run(): Promise<void> {
     core.setOutput("uv-version", setupResult.version);
     core.info(`Successfully installed uv version ${setupResult.version}`);
 
+    if (installPython) {
+      core.info("Installing Python v" + pythonVersion);
+      const execArgs = ["python", "install", "--managed-python", pythonVersion];
+      await exec.exec("uv", execArgs);
+    }
+
     if (enableCache) {
       await restoreCache();
     }
-
-    core.debug("syncDeps=" + syncDeps);
-    core.debug("syncGroup=" + syncGroup);
 
     if (syncDeps) {
       core.info("Syncing dependencies...");
