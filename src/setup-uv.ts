@@ -59,6 +59,9 @@ async function run(): Promise<void> {
     core.setOutput("uv-version", setupResult.version);
     core.info(`Successfully installed uv version ${setupResult.version}`);
 
+    core.debug("python version = " + pythonVersion);
+    core.debug("install-python = " + installPython);
+
     if (installPython) {
       core.info("Installing Python v" + pythonVersion);
       const execArgs = ["python", "install", "--managed-python", pythonVersion];
