@@ -67,6 +67,7 @@ async function run(): Promise<void> {
     core.debug("install-python = " + installPython);
 
     if (installPython) {
+      core.info("Looking for required Python version in pyproject.toml...");
       const requiredPythonVersion = getPythonVersionFromConfigFile(
         `${workingDirectory}${path.sep}pyproject.toml`
       );
