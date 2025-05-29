@@ -15,6 +15,8 @@ export const ignoreNothingToCache =
   core.getInput("ignore-nothing-to-cache") === "true";
 export const ignoreEmptyWorkdir =
   core.getInput("ignore-empty-workdir") === "true";
+export const syncDeps = getSyncDeps();
+export const syncGroup = getSyncGroup();
 export const toolBinDir = getToolBinDir();
 export const toolDir = getToolDir();
 export const serverUrl = core.getInput("server-url");
@@ -26,6 +28,14 @@ function getEnableCache(): boolean {
     return process.env.RUNNER_ENVIRONMENT === "github-hosted";
   }
   return enableCacheInput === "true";
+}
+
+function getSyncDeps(): boolean {
+  return core.getBooleanInput("sync-deps") || false;
+}
+
+function getSyncGroup(): string | undefined {
+  return core.getInput("sync-group") || undefined;
 }
 
 function getToolBinDir(): string | undefined {

@@ -21,6 +21,8 @@ import {
   enableCache,
   githubToken,
   pythonVersion,
+  syncDeps,
+  syncGroup,
   toolBinDir,
   toolDir,
   version as versionInput,
@@ -59,6 +61,19 @@ async function run(): Promise<void> {
     if (enableCache) {
       await restoreCache();
     }
+
+    if (syncDeps) {
+      core.info("Syncing dependencies...");
+      const execArgs = ["sync"];
+      await exec.exec("uv", execArgs);
+    }
+
+    if (syncGroup !== undefined) {
+      core.info(`Syncing dependency group ${syncGroup}...`);
+      const execArgs = ["sync", "--group", syncGroup.toString()];
+      await exec.exec("uv", execArgs);
+    }
+
     process.exit(0);
   } catch (err) {
     core.setFailed((err as Error).message);

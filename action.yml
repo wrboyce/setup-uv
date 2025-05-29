@@ -56,6 +56,12 @@ inputs:
   ignore-empty-workdir:
     description: "Ignore when the working directory is empty."
     default: "false"
+  sync-deps:
+    description: "Sync dependencies"
+    default: "false"
+  sync-group:
+    description: "Dependency group to sync"
+    default: ""
   tool-dir:
     description: "Custom path to set UV_TOOL_DIR to."
     required: false
