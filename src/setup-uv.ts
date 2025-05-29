@@ -62,6 +62,9 @@ async function run(): Promise<void> {
       await restoreCache();
     }
 
+    core.debug("syncDeps=" + syncDeps);
+    core.debug("syncGroup=" + syncGroup);
+
     if (syncDeps) {
       core.info("Syncing dependencies...");
       const execArgs = ["sync"];
@@ -84,11 +87,11 @@ function detectEmptyWorkdir(): void {
   if (fs.readdirSync(".").length === 0) {
     if (ignoreEmptyWorkdir) {
       core.info(
-        "Empty workdir detected. Ignoring because ignore-empty-workdir is enabled",
+        "Empty workdir detected. Ignoring because ignore-empty-workdir is enabled"
       );
     } else {
       core.warning(
-        "Empty workdir detected. This may cause unexpected behavior. You can enable ignore-empty-workdir to mute this warning.",
+        "Empty workdir detected. This may cause unexpected behavior. You can enable ignore-empty-workdir to mute this warning."
       );
     }
   }
@@ -98,7 +101,7 @@ async function setupUv(
   platform: Platform,
   arch: Architecture,
   checkSum: string | undefined,
-  githubToken: string,
+  githubToken: string
 ): Promise<{ uvDir: string; version: string }> {
   const resolvedVersion = await determineVersion();
   const toolCacheResult = tryGetFromToolCache(arch, resolvedVersion);
@@ -116,7 +119,7 @@ async function setupUv(
     arch,
     resolvedVersion,
     checkSum,
-    githubToken,
+    githubToken
   );
 
   return {
@@ -130,19 +133,19 @@ async function determineVersion(): Promise<string> {
     return await resolveVersion(versionInput, githubToken);
   }
   const versionFromUvToml = getUvVersionFromConfigFile(
-    `${workingDirectory}${path.sep}uv.toml`,
+    `${workingDirectory}${path.sep}uv.toml`
   );
   const versionFromPyproject = getUvVersionFromConfigFile(
-    `${workingDirectory}${path.sep}pyproject.toml`,
+    `${workingDirectory}${path.sep}pyproject.toml`
   );
   if (versionFromUvToml === undefined && versionFromPyproject === undefined) {
     core.info(
-      "Could not determine uv version from uv.toml or pyproject.toml. Falling back to latest.",
+      "Could not determine uv version from uv.toml or pyproject.toml. Falling back to latest."
     );
   }
   return await resolveVersion(
     versionFromUvToml || versionFromPyproject || "latest",
-    githubToken,
+    githubToken
   );
 }
 
@@ -201,7 +204,7 @@ async function activateEnvironment(): Promise<void> {
     core.addPath(path.resolve(venvBinPath));
     core.exportVariable(
       "VIRTUAL_ENV",
-      path.resolve(`${workingDirectory}${path.sep}.venv`),
+      path.resolve(`${workingDirectory}${path.sep}.venv`)
     );
   }
 }
