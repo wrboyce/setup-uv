@@ -72,9 +72,9 @@ function getPythonVersion(filePath: string): string | undefined {
   const fileContent = fs.readFileSync(filePath, "utf-8");
   if (filePath.endsWith("pyproject.toml")) {
     const tomlContent = toml.parse(fileContent) as {
-      tool?: { uv?: { "python-version"?: string } };
+      project?: { "python-version"?: string };
     };
-    return tomlContent?.tool?.uv?.["python-version"];
+    return tomlContent?.project?.["python-version"];
   }
   const tomlContent = toml.parse(fileContent) as {
     "requires-python"?: string;
