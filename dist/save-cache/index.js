@@ -88998,7 +88998,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.githubToken = exports.serverUrl = exports.toolDir = exports.toolBinDir = exports.syncGroup = exports.syncDeps = exports.ignoreEmptyWorkdir = exports.ignoreNothingToCache = exports.pruneCache = exports.cacheDependencyGlob = exports.cacheLocalPath = exports.cacheSuffix = exports.enableCache = exports.checkSum = exports.workingDirectory = exports.activateEnvironment = exports.pythonVersion = exports.version = void 0;
+exports.githubToken = exports.serverUrl = exports.toolDir = exports.toolBinDir = exports.syncGroup = exports.syncDeps = exports.ignoreEmptyWorkdir = exports.ignoreNothingToCache = exports.installPython = exports.pruneCache = exports.cacheDependencyGlob = exports.cacheLocalPath = exports.cacheSuffix = exports.enableCache = exports.checkSum = exports.workingDirectory = exports.activateEnvironment = exports.pythonVersion = exports.version = void 0;
 const core = __importStar(__nccwpck_require__(7484));
 const node_path_1 = __importDefault(__nccwpck_require__(6760));
 exports.version = core.getInput("version");
@@ -89011,6 +89011,7 @@ exports.cacheSuffix = core.getInput("cache-suffix") || "";
 exports.cacheLocalPath = getCacheLocalPath();
 exports.cacheDependencyGlob = core.getInput("cache-dependency-glob");
 exports.pruneCache = core.getInput("prune-cache") === "true";
+exports.installPython = core.getBooleanInput("install-python") || false;
 exports.ignoreNothingToCache = core.getInput("ignore-nothing-to-cache") === "true";
 exports.ignoreEmptyWorkdir = core.getInput("ignore-empty-workdir") === "true";
 exports.syncDeps = getSyncDeps();
