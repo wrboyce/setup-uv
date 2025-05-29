@@ -32,7 +32,11 @@ import {
 } from "./utils/inputs";
 import * as exec from "@actions/exec";
 import fs from "node:fs";
-import { getUvVersionFromConfigFile } from "./utils/config-file";
+import {
+  getPythonVersionFromConfigFile,
+  getUvVersionFromConfigFile,
+} from "./utils/config-file";
+import { get } from "node:http";
 
 async function run(): Promise<void> {
   detectEmptyWorkdir();
@@ -63,8 +67,16 @@ async function run(): Promise<void> {
     core.debug("install-python = " + installPython);
 
     if (installPython) {
-      core.info("Installing Python v" + pythonVersion);
-      const execArgs = ["python", "install", "--managed-python", pythonVersion];
+      const requiredPythonVersion = getPythonVersionFromConfigFile(
+        `${workingDirectory}${path.sep}pyproject.toml`
+      );
+      core.info("Installing Python v" + requiredPythonVersion);
+      const execArgs = [
+        "python",
+        "install",
+        "--managed-python",
+        requiredPythonVersion,
+      ];
       await exec.exec("uv", execArgs);
     }
 
